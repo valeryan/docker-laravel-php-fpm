@@ -18,6 +18,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 #install nodejs
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && apt-get install -y nodejs
 
-RUN docker-php-ext-install mbstring pdo_mysql pdo_sqlite mcrypt gd pdo_mysql intl bcmath zip mysqli
+RUN docker-php-ext-install mbstring pdo_mysql pdo_sqlite mcrypt gd intl bcmath zip
 
 COPY php.ini /usr/local/etc/php/
