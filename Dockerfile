@@ -2,6 +2,7 @@ FROM php:7.2-fpm
 
 COPY php.ini /usr/local/etc/php/
 
+# Install system dependencies
 RUN apt-get update -y && \
     apt-get install -y \
     libmcrypt-dev \
@@ -14,9 +15,12 @@ RUN apt-get update -y && \
     zip \
     unzip
 
-#install composer
+# Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-#install nodejs
+
+# Make sure not old version of node cause problems
+RUN apt-get remove nodejs
+# Install nodejs
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - && apt-get install -y nodejs
 
 # Set ini location for pecl
