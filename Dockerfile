@@ -1,7 +1,6 @@
 FROM php:7.2-fpm
 
-RUN usermod -u 1000 www-data
-RUN usermod -G staff www-data
+COPY php.ini /usr/local/etc/php/
 
 RUN apt-get update -y && \
     apt-get install -y \
@@ -11,13 +10,21 @@ RUN apt-get update -y && \
     libsqlite3-dev \
     openssl \
     libicu-dev \
-    libpng-dev
+    libpng-dev \
+    zip \
+    unzip
 
 #install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 #install nodejs
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && apt-get install -y nodejs
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - && apt-get install -y nodejs
 
-RUN docker-php-ext-install mbstring pdo_mysql pdo_sqlite gd intl bcmath zip
+# Set ini location for pecl
+RUN pecl config-set php_ini /usr/local/etc/php/php.ini
 
-COPY php.ini /usr/local/etc/php/
+# Install Pecl Extensions
+RUN pecl install redis
+RUN docker-php-ext-enable redis
+
+# Install PHP Extensions
+RUN docker-php-ext-install mbstring pdo_mysql pdo_sqlite gd intl bcmath zip sockets
