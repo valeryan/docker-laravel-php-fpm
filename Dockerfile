@@ -12,6 +12,7 @@ RUN apt-get update -y && \
     openssl \
     libicu-dev \
     libpng-dev \
+    libonig-dev \
     zip \
     unzip
 
