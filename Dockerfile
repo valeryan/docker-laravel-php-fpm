@@ -1,4 +1,4 @@
-FROM php:7.3-fpm
+FROM php:7.4-fpm
 
 COPY php.ini /usr/local/etc/php/
 
@@ -13,6 +13,7 @@ RUN apt-get update -y && \
     libicu-dev \
     libpng-dev \
     libzip-dev \
+    libonig-dev \
     zip \
     unzip
 
